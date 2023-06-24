@@ -1,0 +1,69 @@
+/* Bruno Ace SC*/
+@import url("https://fonts.googleapis.com/css2?family=Bruno+Ace+SC&display=swap");
+
+/* Bitter */
+@import url("https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Bitter", serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Bruno Ace SC", cursive;
+}
+
+button {
+  font-family: "Bitter", serif;
+}
+
+input[type="text"],
+input[type="number"],
+select,
+textarea,
+option {
+  font-size: 16px;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+input[type="text"],
+input[type="number"],
+select {
+  height: 50px;
+}
+
+select option {
+  color: #fff;
+  background: #1c1c43;
+}
+
+.select__input-container.css-1sk3wyf-Input2 {
+  color: #fff !important;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.select__placeholder.css-1jqq78o-placeholder,
+.select__input-container.css-1fdfzvg-Input2,
+.select__multi-value__label.css-1y7rh0y-MultiValueGeneric2 {
+  color: #fff !important;
+}
+
+.select__multi-value.css-1p3m7a8-multiValue {
+  background: #1c1c43;
+}
+
+.select__multi-value__remove.css-12a83d4-MultiValueRemove:hover {
+  background: #e4e4e7;
+}
