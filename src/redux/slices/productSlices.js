@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+
 import baseURL from "../../utils/baseURL";
 import { resetErrorAction, resetSuccessAction } from "./globalActions";
 
@@ -68,7 +69,50 @@ export const createProductAction = createAsyncThunk(
       );
       return data;
     } catch (error) {
-      console.log(error);
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+
+//Fetch Product action
+export const fetchProductAction = createAsyncThunk(
+  "product/details",
+  async (productId, { rejectWithValue, getState, dispatch }) => {
+    try {
+      const token = getState()?.users?.userAuth?.userInfo?.token;
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      const { data } = await axios.get(
+        `${baseURL}/products/${productId}`,
+        config
+      );
+      return data;
+    } catch (error) {
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+
+// Fetch Products Action
+export const fetchProductsAction = createAsyncThunk(
+  "product/list",
+  async ({ url }, { rejectWithValue, getState, dispatch }) => {
+    console.log(url);
+    try {
+      const token = getState()?.users?.userAuth?.userInfo?.token;
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      const { data } = await axios.get(`${url}`, config);
+      return data;
+    } catch (error) {
       return rejectWithValue(error?.response?.data);
     }
   }
@@ -91,6 +135,38 @@ const productSlices = createSlice({
     builder.addCase(createProductAction.rejected, (state, action) => {
       state.loading = false;
       state.product = null;
+      state.isAdded = false;
+      state.error = action.payload;
+    });
+
+    //Fetch
+    builder.addCase(fetchProductAction.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(fetchProductAction.fulfilled, (state, action) => {
+      state.loading = false;
+      state.product = action.payload;
+      state.isAdded = true;
+    });
+    builder.addCase(fetchProductAction.rejected, (state, action) => {
+      state.loading = false;
+      state.product = null;
+      state.isAdded = false;
+      state.error = action.payload;
+    });
+
+    //Fetch All
+    builder.addCase(fetchProductsAction.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(fetchProductsAction.fulfilled, (state, action) => {
+      state.loading = false;
+      state.products = action.payload;
+      state.isAdded = true;
+    });
+    builder.addCase(fetchProductsAction.rejected, (state, action) => {
+      state.loading = false;
+      state.products = null;
       state.isAdded = false;
       state.error = action.payload;
     });

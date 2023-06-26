@@ -217,7 +217,7 @@ export default function AddProduct() {
                   </div>
                 </div>
 
-                {/* Select category */}
+                {/* Select Category */}
                 <div className="w-full lg:w-1/2">
                   <label className="block text-md font-medium text-zinc-200">
                     Select Category
@@ -240,7 +240,7 @@ export default function AddProduct() {
                 </div>
               </div>
 
-              {/* size option */}
+              {/* Size Option */}
               <div className="w-full flex flex-col lg:flex-row items-center gap-5 lg:gap-10">
                 <div className="w-full lg:w-1/2">
                   <label className="block text-md font-medium text-zinc-200">
@@ -313,7 +313,7 @@ export default function AddProduct() {
                   </div>
                 </div>
 
-                {/* upload images */}
+                {/* Upload Images */}
                 <div className="w-full lg:w-1/2">
                   <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:pt-5">
                     <label
@@ -363,7 +363,7 @@ export default function AddProduct() {
                 </div>
               </div>
 
-              {/* price */}
+              {/* Price */}
               <div className="w-full flex flex-col lg:flex-row items-center gap-5 lg:gap-10">
                 <div className="w-full lg:w-1/2">
                   <label className="block text-md font-medium text-zinc-200">

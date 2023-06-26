@@ -76,9 +76,9 @@ const Sidebar = () => {
       href: "/manage-coupons",
     },
     {
-      title: "Add Category",
+      title: "Add Categories",
       icon: <AddCircleOutlineOutlined />,
-      href: "/add-category",
+      href: "/category-to-add",
       gap: true,
     },
     {

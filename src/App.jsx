@@ -19,6 +19,9 @@ import CategoriesList from "./pages/categories/CategoriesList";
 
 import AddCoupon from "./pages/coupons/AddCoupon";
 import ManageCoupons from "./pages/coupons/ManageCoupons";
+import CategoryToAdd from "./pages/categories/CategoryToAdd";
+import AddBrand from "./pages/categories/AddBrand";
+import AddColor from "./pages/categories/AddColor";
 
 const App = () => {
   return (
@@ -33,19 +36,30 @@ const App = () => {
           }
         >
           <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+
+          {/* Orders */}
           <Route path="/orders" element={<Orders />} />
           <Route path="/customers" element={<Customers />} />
+
+          {/* Products */}
           <Route path="/add-product" element={<AddProduct />} />
           <Route path="/manage-stocks" element={<ManageStocks />} />
+
+          {/* Coupons */}
           <Route path="/add-coupon" element={<AddCoupon />} />
           <Route path="/manage-coupons" element={<ManageCoupons />} />
+
+          {/* Categories */}
+          <Route path="/category-to-add" element={<CategoryToAdd />} />
+          <Route path="/add-brand" element={<AddBrand />} />
+          <Route path="/add-color" element={<AddColor />} />
           <Route path="/add-category" element={<AddCategory />} />
-          <Route path="/categories-list" element={<CategoriesList />} />
+
           <Route path="/colors-list" element={<ColorsList />} />
           <Route path="/brands-list" element={<BrandsList />} />
+          <Route path="/categories-list" element={<CategoriesList />} />
         </Route>
-
-        <Route path="/login" element={<Login />} />
       </Routes>
     </BrowserRouter>
   );
