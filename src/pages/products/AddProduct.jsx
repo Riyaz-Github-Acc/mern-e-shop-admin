@@ -316,10 +316,7 @@ export default function AddProduct() {
                 {/* Upload Images */}
                 <div className="w-full lg:w-1/2">
                   <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:pt-5">
-                    <label
-                      htmlFor="cover-photo"
-                      className="block text-md font-medium text-zinc-200 sm:mt-px sm:pt-2"
-                    >
+                    <label className="block text-md font-medium text-zinc-200 sm:mt-px sm:pt-2">
                       Upload Images
                     </label>
                     <div className="mt-2 sm:col-span-2 sm:mt-0">
@@ -340,10 +337,7 @@ export default function AddProduct() {
                             />
                           </svg>
                           <div className="flex text-md text-gray-500">
-                            <label
-                              htmlFor="file-upload"
-                              className="relative cursor-pointer rounded-md bg-light-blue font-medium text-zinc-200 focus-within:outline-none focus-within:ring-1 focus-within:ring-zinc-200 focus-within:ring-offset-1 hover:text-sky-500"
-                            >
+                            <label className="relative cursor-pointer rounded-md bg-light-blue font-medium text-zinc-200 focus-within:outline-none focus-within:ring-1 focus-within:ring-zinc-200 focus-within:ring-offset-1 hover:text-sky-500">
                               <span>Upload files</span>
                               <input
                                 type="file"
@@ -399,10 +393,7 @@ export default function AddProduct() {
 
               {/* Description */}
               <div>
-                <label
-                  htmlFor="comment"
-                  className="block text-md font-medium text-zinc-200"
-                >
+                <label className="block text-md font-medium text-zinc-200">
                   Product Description
                 </label>
                 <div className="mt-2">

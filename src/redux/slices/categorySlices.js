@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+
 import baseURL from "../../utils/baseURL";
 import { resetErrorAction, resetSuccessAction } from "./globalActions";
 
@@ -20,27 +21,26 @@ export const createCategoryAction = createAsyncThunk(
   "categories/create",
   async (payload, { rejectWithValue, getState, dispatch }) => {
     try {
-      const { name, image } = payload;
-
-      // FormData
-      const formData = new FormData();
-      formData.append("name", name);
-      formData.append("image", image);
+      const { name, file } = payload;
 
       // Token Authentication
       const token = getState()?.users?.userAuth?.userInfo?.token;
       const config = {
         headers: {
           Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
         },
       };
+
+      // FormData
+      const formData = new FormData();
+      formData.append("name", name);
+      formData.append("file", file);
 
       // Make http Request
       const { data } = await axios.post(
         `${baseURL}/categories`,
-        {
-          name,
-        },
+        formData,
         config
       );
       return data;
@@ -50,7 +50,7 @@ export const createCategoryAction = createAsyncThunk(
   }
 );
 
-// Fetch All Category Action
+// Fetch Categories Action
 export const fetchCategoriesAction = createAsyncThunk(
   "categories/fetch-all",
   async (payload, { rejectWithValue, getState, dispatch }) => {
@@ -74,15 +74,15 @@ const categorySlices = createSlice({
       state.loading = true;
     });
     builder.addCase(createCategoryAction.fulfilled, (state, action) => {
-      state.loading = false;
       state.category = action.payload;
       state.isAdded = true;
+      state.loading = false;
     });
     builder.addCase(createCategoryAction.rejected, (state, action) => {
-      state.loading = false;
       state.category = null;
       state.isAdded = false;
       state.error = action.payload;
+      state.loading = false;
     });
 
     //Fetch All
