@@ -44,6 +44,7 @@ export default function CategoryToAdd() {
   //onSubmit
   const handleOnSubmit = (e) => {
     e.preventDefault();
+
     //Dispatch
     dispatch(
       createCategoryAction({
@@ -51,6 +52,11 @@ export default function CategoryToAdd() {
         file,
       })
     );
+
+    //Reset Form
+    setFormData({
+      name: "",
+    });
   };
 
   return (
@@ -68,7 +74,7 @@ export default function CategoryToAdd() {
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-lg">
           <div className="bg-light-blue py-8 px-4 shadow sm:rounded-lg sm:px-10">
             <form
-              className="flex flex-col gap-0 lg:gap-3 space-y-6"
+              className="flex flex-col gap-0 lg:gap-3 space-y-4"
               onSubmit={handleOnSubmit}
             >
               <div>
