@@ -47,7 +47,7 @@ const Sidebar = () => {
 
   const menus = [
     { title: "Dashboard", icon: <SpaceDashboardOutlined />, href: "/" },
-    { title: "Orders", icon: <Inventory2Outlined />, href: "/orders" },
+    // { title: "Orders", icon: <Inventory2Outlined />, href: "/orders" },
     {
       title: "Customers",
       icon: <PeopleAltOutlined />,

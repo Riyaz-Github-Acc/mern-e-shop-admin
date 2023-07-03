@@ -2,11 +2,11 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
+import Button from "../../components/Button";
 import ErrorMsg from "../../components/messages/ErrorMsg";
 import SuccessMsg from "../../components/messages/SuccessMsg";
 import CircularLoading from "../../components/loaders/CircularLoading";
 import { createCategoryAction } from "../../redux/slices/categorySlices";
-import Button from "../../components/Button";
 
 export default function CategoryToAdd() {
   //Dispatch
@@ -23,6 +23,7 @@ export default function CategoryToAdd() {
   //File
   const [file, setFile] = useState(null);
   const [fileError, setFileError] = useState(null);
+
   //File Handle Change
   const handleFileChange = (event) => {
     const newFile = event.target.files[0];
@@ -38,10 +39,10 @@ export default function CategoryToAdd() {
     setFile(newFile);
   };
 
-  //Get Data from Store
+  // Get Data from Store
   const { loading, error, isAdded } = useSelector((state) => state?.categories);
 
-  //onSubmit
+  // onSubmit
   const handleOnSubmit = (e) => {
     e.preventDefault();
 
@@ -53,7 +54,7 @@ export default function CategoryToAdd() {
       })
     );
 
-    //Reset Form
+    // Reset Form
     setFormData({
       name: "",
     });
@@ -64,6 +65,7 @@ export default function CategoryToAdd() {
       {error && <ErrorMsg message={error?.message} />}
       {fileError && <ErrorMsg message={fileError} />}
       {isAdded && <SuccessMsg message="Category created successfully" />}
+
       <div className="flex min-h-full flex-col justify-center py-8 sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full">
           <h2 className="text-center text-2xl md:text-3xl font-bold text-white tracking-wider">

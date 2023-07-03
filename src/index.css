@@ -67,3 +67,7 @@ select option {
 .select__multi-value__remove.css-12a83d4-MultiValueRemove:hover {
   background: #e4e4e7;
 }
+
+.react-datepicker-wrapper {
+  display: block;
+}

@@ -76,6 +76,51 @@ export const createProductAction = createAsyncThunk(
   }
 );
 
+// Update Product Action
+export const updateProductAction = createAsyncThunk(
+  "product/update",
+  async (payload, { rejectWithValue, getState, dispatch }) => {
+    console.log(payload);
+    try {
+      const {
+        name,
+        description,
+        category,
+        sizes,
+        brand,
+        colors,
+        price,
+        totalQty,
+        id,
+      } = payload;
+      const token = getState()?.users?.userAuth?.userInfo?.token;
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      const { data } = await axios.put(
+        `${baseURL}/products/${id}`,
+        {
+          name,
+          description,
+          category,
+          sizes,
+          brand,
+          colors,
+          price,
+          totalQty,
+        },
+        config
+      );
+      return data;
+    } catch (error) {
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+
 //Fetch Product action
 export const fetchProductAction = createAsyncThunk(
   "product/details",
@@ -124,7 +169,7 @@ const productSlices = createSlice({
   name: "products",
   initialState,
   extraReducers: (builder) => {
-    //Create
+    // Create
     builder.addCase(createProductAction.pending, (state) => {
       state.loading = true;
     });
@@ -140,7 +185,23 @@ const productSlices = createSlice({
       state.error = action.payload;
     });
 
-    //Fetch
+    // Update
+    builder.addCase(updateProductAction.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(updateProductAction.fulfilled, (state, action) => {
+      state.loading = false;
+      state.product = action.payload;
+      state.isUpdated = true;
+    });
+    builder.addCase(updateProductAction.rejected, (state, action) => {
+      state.loading = false;
+      state.product = null;
+      state.isUpdated = false;
+      state.error = action.payload;
+    });
+
+    // Fetch
     builder.addCase(fetchProductAction.pending, (state) => {
       state.loading = true;
     });
@@ -156,7 +217,7 @@ const productSlices = createSlice({
       state.error = action.payload;
     });
 
-    //Fetch All
+    // Fetch All
     builder.addCase(fetchProductsAction.pending, (state) => {
       state.loading = true;
     });

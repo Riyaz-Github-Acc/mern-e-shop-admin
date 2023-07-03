@@ -8,9 +8,25 @@ import {
 import { useState } from "react";
 
 import profilePic from "../assets/images/placeholders/profile-pic-placeholder.jpg";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { logoutAction } from "../redux/slices/userSlices";
 
 const Header = () => {
   const [open, setOpen] = useState(false);
+
+  // Dispatch
+  const dispatch = useDispatch();
+  // Logout Handler
+  const handleLogout = () => {
+    dispatch(logoutAction());
+
+    // Reload
+    window.location.reload();
+
+    // Redirect
+    window.location.href = "/login";
+  };
 
   return (
     <div className="sticky top-0 left-0 flex md:flex-row flex-col gap-4 items-center justify-between bg-dark-blue w-full border-b border-light-gray py-4 px-4 md:px-10 z-10">
@@ -54,7 +70,10 @@ const Header = () => {
               <span>Profile</span>
             </div>
 
-            <div className="flex flex-row gap-2 text hover:bg-light-white font-medium hover:text-white py-2 px-10 rounded-md cursor-pointer">
+            <div
+              onClick={handleLogout}
+              className="flex flex-row gap-2 text hover:bg-light-white font-medium hover:text-white py-2 px-10 rounded-md cursor-pointer"
+            >
               <Logout />
               <span>Logout</span>
             </div>

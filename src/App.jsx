@@ -22,6 +22,7 @@ import ManageCoupons from "./pages/coupons/ManageCoupons";
 import CategoryToAdd from "./pages/categories/CategoryToAdd";
 import AddBrand from "./pages/categories/AddBrand";
 import AddColor from "./pages/categories/AddColor";
+import UpdateCoupon from "./pages/coupons/UpdateCoupon";
 
 const App = () => {
   return (
@@ -49,6 +50,7 @@ const App = () => {
           {/* Coupons */}
           <Route path="/add-coupon" element={<AddCoupon />} />
           <Route path="/manage-coupons" element={<ManageCoupons />} />
+          <Route path="/edit-coupon/:id" element={<UpdateCoupon />} />
 
           {/* Categories */}
           <Route path="/category-to-add" element={<CategoryToAdd />} />

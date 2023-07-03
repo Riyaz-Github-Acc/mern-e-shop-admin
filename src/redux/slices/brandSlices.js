@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+
 import baseURL from "../../utils/baseURL";
 import { resetErrorAction, resetSuccessAction } from "./globalActions";
 

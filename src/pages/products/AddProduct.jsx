@@ -203,7 +203,7 @@ export default function AddProduct() {
             >
               <div>
                 <label className="block text-md font-medium text-zinc-200">
-                  Color Name
+                  Product Name
                 </label>
                 <div className="mt-2">
                   <input
@@ -388,7 +388,7 @@ export default function AddProduct() {
                 </label>
                 <div className="mt-2">
                   <textarea
-                    rows={5}
+                    rows={4}
                     name="desc"
                     value={formData.desc}
                     onChange={handleOnChange}
