@@ -65,7 +65,7 @@ const brandSlices = createSlice({
   name: "brands",
   initialState,
   extraReducers: (builder) => {
-    //Create
+    // Create
     builder.addCase(createBrandAction.pending, (state) => {
       state.loading = true;
     });
@@ -81,19 +81,17 @@ const brandSlices = createSlice({
       state.error = action.payload;
     });
 
-    //Fetch All
+    // Fetch All
     builder.addCase(fetchBrandsAction.pending, (state) => {
       state.loading = true;
     });
     builder.addCase(fetchBrandsAction.fulfilled, (state, action) => {
       state.loading = false;
       state.brands = action.payload;
-      state.isAdded = true;
     });
     builder.addCase(fetchBrandsAction.rejected, (state, action) => {
       state.loading = false;
       state.brands = null;
-      state.isAdded = false;
       state.error = action.payload;
     });
 

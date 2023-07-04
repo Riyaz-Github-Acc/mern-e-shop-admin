@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
-import { AddCommentOutlined } from "@mui/icons-material";
+import { AddOutlined } from "@mui/icons-material";
 import { fetchCategoriesAction } from "../../redux/slices/categorySlices";
 
 import Button from "../../components/Button";
@@ -38,7 +38,10 @@ export default function ManageCategories() {
         <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
           <Link to="/add-category">
             <Button type="loginBtn">
-              <AddCommentOutlined /> Add New Category
+              <div className="flex flex-row items-center gap-1">
+                <AddOutlined />
+                <span>Add New Category</span>
+              </div>
             </Button>
           </Link>
         </div>
@@ -104,7 +107,7 @@ export default function ManageCategories() {
                               />
                             </div>
                             <div className="ml-4">
-                              <div className="font-medium">
+                              <div className="font-medium text-white">
                                 {category?.name}
                               </div>
                             </div>

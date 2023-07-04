@@ -1,7 +1,9 @@
-/* eslint-disable no-unused-vars */
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+
+import { AddOutlined } from "@mui/icons-material";
+import { fetchProductsAction } from "../../redux/slices/productSlices";
 
 import baseURL from "../../utils/baseURL";
 import Button from "../../components/Button";
@@ -9,14 +11,10 @@ import ErrorMsg from "../../components/messages/ErrorMsg";
 import SpinLoading from "../../components/loaders/SpinLoading";
 import NoDataFound from "../../components/messages/NoDataFound";
 
-import { fetchProductsAction } from "../../redux/slices/productSlices";
-import { AddCommentOutlined } from "@mui/icons-material";
-
 export default function ManageStocks() {
   //delete product handler
   const deleteProductHandler = (id) => {};
   let productUrl = `${baseURL}/products`;
-
   //dispatch
   const dispatch = useDispatch();
   useEffect(() => {
@@ -25,8 +23,7 @@ export default function ManageStocks() {
         url: productUrl,
       })
     );
-  }, [dispatch, productUrl]);
-
+  }, [dispatch]);
   //get data from store
   const {
     products: { products },
@@ -47,7 +44,10 @@ export default function ManageStocks() {
         <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
           <Link to="/add-product">
             <Button type="loginBtn">
-              <AddCommentOutlined /> Add New Product
+              <div className="flex flex-row items-center gap-1">
+                <AddOutlined />
+                <span>Add New Product</span>
+              </div>
             </Button>
           </Link>
         </div>
@@ -69,44 +69,44 @@ export default function ManageStocks() {
                     <tr className="text-light-gray">
                       <th
                         scope="col"
-                        className="py-5 pl-4 text-left text-sm font-semibold sm:pl-6"
+                        className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold sm:pl-6"
                       >
                         Name
                       </th>
                       <th
                         scope="col"
-                        className="px-3 py-5 text-left text-sm font-semibold"
+                        className="px-3 py-3.5 text-left text-sm font-semibold"
                       >
                         Category
                       </th>
                       <th
                         scope="col"
-                        className="px-3 py-5 text-left text-sm font-semibold"
+                        className="px-3 py-3.5 text-left text-sm font-semibold"
                       >
                         Status
                       </th>
                       <th
                         scope="col"
-                        className="px-3 py-5 text-left text-sm font-semibold"
+                        className="px-3 py-3.5 text-left text-sm font-semibold"
                       >
                         Total Qty
                       </th>
                       <th
                         scope="col"
-                        className="px-3 py-5 text-left text-sm font-semibold"
+                        className="px-3 py-3.5 text-left text-sm font-semibold"
                       >
                         Total Sold
                       </th>
 
                       <th
                         scope="col"
-                        className="px-3 py-5 text-left text-sm font-semibold"
+                        className="px-3 py-3.5 text-left text-sm font-semibold"
                       >
                         QTY Left
                       </th>
                       <th
                         scope="col"
-                        className="px-3 py-5 text-left text-sm font-semibold"
+                        className="px-3 py-3.5 text-left text-sm font-semibold"
                       >
                         Price
                       </th>
@@ -128,7 +128,7 @@ export default function ManageStocks() {
                     {/* loop here */}
                     {products?.map((product) => (
                       <tr key={product._id}>
-                        <td className="whitespace-nowrap py-4 pl-4 text-sm sm:pl-6">
+                        <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6">
                           <div className="flex items-center">
                             <div className="h-10 w-10 flex-shrink-0">
                               <img
@@ -148,12 +148,10 @@ export default function ManageStocks() {
                           </div>
                         </td>
                         <td className="whitespace-nowrap px-3 py-4 text-sm text-light-gray">
-                          <div className="text-light-gray">
-                            {product?.category}
-                          </div>
+                          <div className="text-white">{product?.category}</div>
                         </td>
                         <td className="whitespace-nowrap px-3 py-4 text-sm text-light-gray">
-                          {product?.qtyLeft <= 0 ? (
+                          {product?.qtyLeft < 0 ? (
                             <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
                               Out of Stock
                             </span>
@@ -163,14 +161,14 @@ export default function ManageStocks() {
                             </span>
                           )}
                         </td>
-                        <td className="whitespace-nowrap px-2 py-4 text-sm text-light-gray">
+                        <td className="whitespace-nowrap px-3 py-4 text-sm text-light-gray">
                           {product?.totalQty}
                         </td>
 
-                        <td className="whitespace-nowrap px-2 py-4 text-sm text-light-gray">
+                        <td className="whitespace-nowrap px-3 py-4 text-sm text-light-gray">
                           {product?.totalSold}
                         </td>
-                        <td className="whitespace-nowrap px-2 py-4 text-sm text-light-gray">
+                        <td className="whitespace-nowrap px-3 py-4 text-sm text-light-gray">
                           {product?.qtyLeft}
                         </td>
                         <td className="whitespace-nowrap px-3 py-4 text-sm text-light-gray">
@@ -179,7 +177,7 @@ export default function ManageStocks() {
                         {/* edit */}
                         <td className="relative whitespace-nowrap py-4 px-4 text-right text-sm font-medium">
                           <Link
-                            to={`/admin/products/${product._id}`}
+                            to={`#`}
                             className="text-cyan-800 hover:text-cyan-900"
                           >
                             <svg
@@ -197,13 +195,13 @@ export default function ManageStocks() {
                               />
                             </svg>
 
-                            <span className="sr-only">, {product.name}</span>
+                            <span className="sr-only">, {product?.name}</span>
                           </Link>
                         </td>
                         {/* delete */}
                         <td className="relative whitespace-nowrap py-4 px-4 text-right text-sm font-medium">
                           <Link
-                            onClick={() => deleteProductHandler(product._id)}
+                            // onClick={() => deleteProductHandler(product?._id)}
                             className="text-red-500 hover:text-red-400"
                           >
                             <svg
@@ -221,7 +219,7 @@ export default function ManageStocks() {
                               />
                             </svg>
 
-                            <span className="sr-only">, {product.name}</span>
+                            <span className="sr-only">, {product?.name}</span>
                           </Link>
                         </td>
                       </tr>

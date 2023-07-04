@@ -69,7 +69,7 @@ const categorySlices = createSlice({
   name: "categories",
   initialState,
   extraReducers: (builder) => {
-    //Create
+    // Create
     builder.addCase(createCategoryAction.pending, (state) => {
       state.loading = true;
     });
@@ -85,30 +85,23 @@ const categorySlices = createSlice({
       state.loading = false;
     });
 
-    //Fetch All
+    // Fetch All
     builder.addCase(fetchCategoriesAction.pending, (state) => {
       state.loading = true;
     });
     builder.addCase(fetchCategoriesAction.fulfilled, (state, action) => {
       state.loading = false;
       state.categories = action.payload;
-      state.isAdded = true;
     });
     builder.addCase(fetchCategoriesAction.rejected, (state, action) => {
       state.loading = false;
       state.categories = null;
-      state.isAdded = false;
       state.error = action.payload;
     });
 
     // Reset Error Action
     builder.addCase(resetErrorAction.pending, (state) => {
       state.error = null;
-    });
-
-    // Reset Success Action
-    builder.addCase(resetSuccessAction.pending, (state) => {
-      state.isAdded = false;
     });
   },
 });

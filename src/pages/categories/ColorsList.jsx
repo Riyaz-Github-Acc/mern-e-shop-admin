@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
-import { AddCommentOutlined } from "@mui/icons-material";
+import { AddOutlined } from "@mui/icons-material";
 import { fetchColorsAction } from "../../redux/slices/colorSlices";
 
 import Button from "../../components/Button";
@@ -36,7 +36,10 @@ export default function ColorsList() {
         <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
           <Link to="/add-color">
             <Button type="loginBtn">
-              <AddCommentOutlined /> Add New Color
+              <div className="flex flex-row items-center gap-1">
+                <AddOutlined />
+                <span>Add New Color</span>
+              </div>
             </Button>
           </Link>
         </div>

@@ -64,7 +64,7 @@ const colorSlices = createSlice({
   name: "colors",
   initialState,
   extraReducers: (builder) => {
-    //Create
+    // Create
     builder.addCase(createColorAction.pending, (state) => {
       state.loading = true;
     });
@@ -80,19 +80,17 @@ const colorSlices = createSlice({
       state.error = action.payload;
     });
 
-    //Fetch All
+    // Fetch All
     builder.addCase(fetchColorsAction.pending, (state) => {
       state.loading = true;
     });
     builder.addCase(fetchColorsAction.fulfilled, (state, action) => {
       state.loading = false;
       state.colors = action.payload;
-      state.isAdded = true;
     });
     builder.addCase(fetchColorsAction.rejected, (state, action) => {
       state.loading = false;
       state.colors = null;
-      state.isAdded = false;
       state.error = action.payload;
     });
 
