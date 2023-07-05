@@ -12,7 +12,7 @@ const initialState = {
   error: null,
   isAdded: false,
   isUpdated: false,
-  isDelete: false,
+  isDeleted: false,
 };
 
 // Create Color Action
@@ -38,6 +38,70 @@ export const createColorAction = createAsyncThunk(
         },
         config
       );
+      return data;
+    } catch (error) {
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+
+// Update Color Action
+export const updateColorAction = createAsyncThunk(
+  "colors/update",
+  async ({ name, id }, { rejectWithValue, getState, dispatch }) => {
+    try {
+      // Token Authentication
+      const token = getState()?.users?.userAuth?.userInfo?.token;
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      // Make http Request
+      const { data } = await axios.put(
+        `${baseURL}/colors/${id}`,
+        {
+          name,
+        },
+        config
+      );
+      return data;
+    } catch (error) {
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+
+// Delete Color Action
+export const deleteColorAction = createAsyncThunk(
+  "colors/delete",
+  async (id, { rejectWithValue, getState, dispatch }) => {
+    try {
+      // Token Authentication
+      const token = getState()?.users?.userAuth?.userInfo?.token;
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      // Make http Request
+      const { data } = await axios.delete(`${baseURL}/colors/${id}`, config);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+
+// Fetch color Action
+export const fetchColorAction = createAsyncThunk(
+  "colors/fetch",
+  async (payload, { rejectWithValue, getState, dispatch }) => {
+    try {
+      // Make http Request
+      const { data } = await axios.get(`${baseURL}/colors/${id}`);
       return data;
     } catch (error) {
       return rejectWithValue(error?.response?.data);
@@ -77,6 +141,48 @@ const colorSlices = createSlice({
       state.loading = false;
       state.color = null;
       state.isAdded = false;
+      state.error = action.payload;
+    });
+
+    // Update
+    builder.addCase(updateColorAction.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(updateColorAction.fulfilled, (state, action) => {
+      state.loading = false;
+      state.color = action.payload;
+      state.isUpdated = true;
+    });
+    builder.addCase(updateColorAction.rejected, (state, action) => {
+      state.loading = false;
+      state.color = null;
+      state.error = action.payload;
+    });
+
+    // Delete
+    builder.addCase(deleteColorAction.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(deleteColorAction.fulfilled, (state, action) => {
+      state.loading = false;
+      state.isDeleted = true;
+    });
+    builder.addCase(deleteColorAction.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    });
+
+    // Fetch
+    builder.addCase(fetchColorAction.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(fetchColorAction.fulfilled, (state, action) => {
+      state.loading = false;
+      state.color = action.payload;
+    });
+    builder.addCase(fetchColorAction.rejected, (state, action) => {
+      state.loading = false;
+      state.color = null;
       state.error = action.payload;
     });
 

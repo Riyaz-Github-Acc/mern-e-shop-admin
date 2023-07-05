@@ -93,13 +93,16 @@ export default function BrandsList() {
                       <tr key={brand?._id}>
                         <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6">
                           <div className="flex items-center">
-                            <div className="font-medium">{brand?.name}</div>
+                            <div className="font-medium capitalize">
+                              {brand?.name}
+                            </div>
                           </div>
                         </td>
 
                         <td className="whitespace-nowrap px-3 py-4 text-sm text-light-gray">
                           {new Date(brand?.createdAt).toLocaleDateString()}
                         </td>
+
                         {/* edit */}
                         <td className="relative whitespace-nowrap py-4 px-4 text-right text-sm font-medium">
                           <Link
@@ -124,6 +127,7 @@ export default function BrandsList() {
                             <span className="sr-only">, {brand?.name}</span>
                           </Link>
                         </td>
+
                         {/* delete */}
                         <td className="relative whitespace-nowrap py-4 px-4 text-right text-sm font-medium">
                           <Link

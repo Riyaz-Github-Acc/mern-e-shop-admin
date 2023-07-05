@@ -30,6 +30,7 @@ button {
 
 input[type="text"],
 input[type="number"],
+input[type="date"],
 select,
 textarea,
 option {
@@ -39,6 +40,7 @@ option {
 
 input[type="text"],
 input[type="number"],
+input[type="date"],
 select {
   height: 50px;
 }

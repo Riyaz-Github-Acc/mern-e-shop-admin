@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -5,24 +6,24 @@ import { useDispatch, useSelector } from "react-redux";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-import { CalendarMonthOutlined } from "@mui/icons-material";
-
 import Button from "../../components/Button";
 import ErrorMsg from "../../components/messages/ErrorMsg";
 import SuccessMsg from "../../components/messages/SuccessMsg";
-// import SpinLoading from "../../components/loaders/SpinLoading";
 import CircularLoading from "../../components/loaders/CircularLoading";
 
 import {
   fetchCouponAction,
   updateCouponAction,
 } from "../../redux/slices/couponSlices";
+import { CalendarMonthOutlined } from "@mui/icons-material";
 
 export default function UpdateCoupon() {
   //get coupon from url
   const { id } = useParams();
+
   //dispatch
   const dispatch = useDispatch();
+
   //---Fetch coupon ---
   useEffect(() => {
     dispatch(fetchCouponAction(id));
@@ -30,8 +31,8 @@ export default function UpdateCoupon() {
   const { coupon, loading, error, isUpdated } = useSelector(
     (state) => state?.coupons
   );
+
   //get the coupon
-  console.log(coupon?.coupon?._id);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
 
@@ -41,11 +42,12 @@ export default function UpdateCoupon() {
     discount: coupon?.coupon?.discount,
   });
 
-  //onHandleChange---
+  //handleOnChange---
   const handleOnChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-  //onHandleSubmit---
+
+  //handleOnSubmit---
   const handleOnSubmit = (e) => {
     e.preventDefault();
     dispatch(
@@ -57,16 +59,18 @@ export default function UpdateCoupon() {
         endDate,
       })
     );
+
     //reset
     setFormData({
       code: "",
       discount: "",
     });
   };
+
   return (
     <>
       {error && <ErrorMsg message={error?.message} />}
-      {isUpdated && <SuccessMsg message="Bravo, coupon created successfuly" />}
+      {isUpdated && <SuccessMsg message="Coupon updated successfully" />}
 
       <div className="flex min-h-full flex-col justify-center py-8 sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full">
@@ -83,7 +87,7 @@ export default function UpdateCoupon() {
             >
               <div>
                 <label className="block text-md font-medium text-zinc-200">
-                  Coupon Code
+                  Name
                 </label>
                 <div className="mt-2">
                   <input

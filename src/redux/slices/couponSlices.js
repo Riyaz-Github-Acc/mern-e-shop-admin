@@ -13,7 +13,7 @@ const initialState = {
   error: null,
   isAdded: false,
   isUpdated: false,
-  isDelete: false,
+  isDeleted: false,
 };
 
 // Create Coupon Action
@@ -54,12 +54,11 @@ export const createCouponAction = createAsyncThunk(
 export const updateCouponAction = createAsyncThunk(
   "coupons/update",
   async (
-    { code, discount, startDate, endDate, id },
-    { rejectWithValue, getState }
+    { discount, startDate, endDate, id },
+    { rejectWithValue, getState, dispatch }
   ) => {
-    console.log({ code, discount, startDate, endDate, id });
     try {
-      // Token Authentication
+      // Token Authenticated
       const token = getState()?.users?.userAuth?.userInfo?.token;
       const config = {
         headers: {
@@ -85,18 +84,20 @@ export const updateCouponAction = createAsyncThunk(
   }
 );
 
-//Delete Coupon Action
+// Delete Coupon Action
 export const deleteCouponAction = createAsyncThunk(
   "coupons/delete",
-  async (id, { rejectWithValue, getState }) => {
+  async (id, { rejectWithValue, getState, dispatch }) => {
     try {
-      //Token - Authenticated
+      // Token Authenticated
       const token = getState()?.users?.userAuth?.userInfo?.token;
       const config = {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       };
+
+      // Make http Request
       const { data } = await axios.delete(`${baseURL}/coupons/${id}`, config);
       return data;
     } catch (error) {
@@ -108,7 +109,7 @@ export const deleteCouponAction = createAsyncThunk(
 //Fetch Coupon Action
 export const fetchCouponAction = createAsyncThunk(
   "coupons/single",
-  async (code, { rejectWithValue }) => {
+  async (code, { rejectWithValue, getState, dispatch }) => {
     try {
       const { data } = await axios.get(
         `${baseURL}/coupons/single?code=${code}`,
@@ -121,10 +122,10 @@ export const fetchCouponAction = createAsyncThunk(
   }
 );
 
-//Fetch Coupons Action
+// Fetch Coupons Action
 export const fetchCouponsAction = createAsyncThunk(
-  "coupons/fetch-all",
-  async ({ rejectWithValue }) => {
+  "coupons/fetch-All",
+  async (payload, { rejectWithValue, getState, dispatch }) => {
     try {
       const { data } = await axios.get(`${baseURL}/coupons`);
       return data;
@@ -134,12 +135,12 @@ export const fetchCouponsAction = createAsyncThunk(
   }
 );
 
-//Coupon Slices
+// Coupon Slices
 const couponSlices = createSlice({
   name: "coupons",
   initialState,
   extraReducers: (builder) => {
-    //Create
+    // Create
     builder.addCase(createCouponAction.pending, (state) => {
       state.loading = true;
     });
@@ -155,7 +156,7 @@ const couponSlices = createSlice({
       state.error = action.payload;
     });
 
-    //Update
+    // Update
     builder.addCase(updateCouponAction.pending, (state) => {
       state.loading = true;
     });
@@ -167,25 +168,23 @@ const couponSlices = createSlice({
     builder.addCase(updateCouponAction.rejected, (state, action) => {
       state.loading = false;
       state.coupon = null;
-      state.isUpdated = false;
       state.error = action.payload;
     });
 
-    //Delete
+    // Delete
     builder.addCase(deleteCouponAction.pending, (state) => {
       state.loading = true;
     });
-    builder.addCase(deleteCouponAction.fulfilled, (state) => {
+    builder.addCase(deleteCouponAction.fulfilled, (state, action) => {
       state.loading = false;
-      state.isDelete = true;
+      state.isDeleted = true;
     });
     builder.addCase(deleteCouponAction.rejected, (state, action) => {
       state.loading = false;
-      state.isDelete = false;
       state.error = action.payload;
     });
 
-    //Fetch
+    // Fetch Single
     builder.addCase(fetchCouponAction.pending, (state) => {
       state.loading = true;
     });
@@ -199,7 +198,7 @@ const couponSlices = createSlice({
       state.error = action.payload;
     });
 
-    //Fetch All
+    // Fetch All
     builder.addCase(fetchCouponsAction.pending, (state) => {
       state.loading = true;
     });

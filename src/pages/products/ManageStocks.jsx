@@ -127,7 +127,7 @@ export default function ManageStocks() {
                   <tbody className="divide-y divide-gray-200 bg-light-blue">
                     {/* loop here */}
                     {products?.map((product) => (
-                      <tr key={product._id}>
+                      <tr key={product?._id}>
                         <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6">
                           <div className="flex items-center">
                             <div className="h-10 w-10 flex-shrink-0">
@@ -139,7 +139,7 @@ export default function ManageStocks() {
                             </div>
                             <div className="ml-4">
                               <div className="font-medium text-white">
-                                {product.name}
+                                {product?.name}
                               </div>
                               <div className="text-light-gray">
                                 {product?.brand}
@@ -151,8 +151,8 @@ export default function ManageStocks() {
                           <div className="text-white">{product?.category}</div>
                         </td>
                         <td className="whitespace-nowrap px-3 py-4 text-sm text-light-gray">
-                          {product?.qtyLeft < 0 ? (
-                            <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                          {product?.qtyLeft <= 0 ? (
+                            <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-500">
                               Out of Stock
                             </span>
                           ) : (
@@ -219,7 +219,7 @@ export default function ManageStocks() {
                               />
                             </svg>
 
-                            <span className="sr-only">, {product?.name}</span>
+                            <span className="sr-only">{product?.name}</span>
                           </Link>
                         </td>
                       </tr>

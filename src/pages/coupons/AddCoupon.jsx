@@ -109,6 +109,7 @@ export default function AddCoupon() {
                   <DatePicker
                     selected={startDate}
                     onChange={(date) => setStartDate(date)}
+                    // isClearable={true}
                     className="block w-full appearance-none rounded-md border border-gray-300 px-[15px] py-2 shadow-sm focus:border-white focus:outline-none focus:ring-zinc-200 text-[16px] bg-[rgba(0,0,0,1)] cursor-pointer"
                   />
                   <CalendarMonthOutlined className="absolute top-3 right-3" />

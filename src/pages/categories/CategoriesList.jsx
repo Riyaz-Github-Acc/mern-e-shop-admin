@@ -107,7 +107,7 @@ export default function ManageCategories() {
                               />
                             </div>
                             <div className="ml-4">
-                              <div className="font-medium text-white">
+                              <div className="font-medium text-white capitalize">
                                 {category?.name}
                               </div>
                             </div>
