@@ -13,7 +13,7 @@ const initialState = {
   error: null,
   isAdded: false,
   isUpdated: false,
-  isDelete: false,
+  isDeleted: false,
 };
 
 // Create Product Action
@@ -30,7 +30,7 @@ export const createProductAction = createAsyncThunk(
         colors,
         price,
         totalQty,
-        files,
+        // files,
       } = payload;
 
       // Token Authentication
@@ -59,9 +59,9 @@ export const createProductAction = createAsyncThunk(
         formData.append("colors", color);
       });
 
-      files.forEach((file) => {
-        formData.append("files", file);
-      });
+      // files.forEach((file) => {
+      //   formData.append("files", file);
+      // });
 
       // Make http Request
       const { data } = await axios.post(
@@ -80,7 +80,6 @@ export const createProductAction = createAsyncThunk(
 export const updateProductAction = createAsyncThunk(
   "product/update",
   async (payload, { rejectWithValue, getState, dispatch }) => {
-    console.log(payload);
     try {
       const {
         name,
@@ -121,7 +120,29 @@ export const updateProductAction = createAsyncThunk(
   }
 );
 
-//Fetch Product action
+// Delete Product Action
+export const deleteProductAction = createAsyncThunk(
+  "product/delete",
+  async (id, { rejectWithValue, getState, dispatch }) => {
+    try {
+      // Token Authenticated
+      const token = getState()?.users?.userAuth?.userInfo?.token;
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      // Make http Request
+      const { data } = await axios.delete(`${baseURL}/products/${id}`, config);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+
+// Fetch Product Action
 export const fetchProductAction = createAsyncThunk(
   "product/details",
   async (productId, { rejectWithValue, getState, dispatch }) => {
@@ -201,6 +222,19 @@ const productSlices = createSlice({
       state.error = action.payload;
     });
 
+    // Delete
+    builder.addCase(deleteProductAction.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(deleteProductAction.fulfilled, (state) => {
+      state.loading = false;
+      state.isDeleted = true;
+    });
+    builder.addCase(deleteProductAction.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    });
+
     // Fetch
     builder.addCase(fetchProductAction.pending, (state) => {
       state.loading = true;
@@ -208,12 +242,10 @@ const productSlices = createSlice({
     builder.addCase(fetchProductAction.fulfilled, (state, action) => {
       state.loading = false;
       state.product = action.payload;
-      state.isAdded = true;
     });
     builder.addCase(fetchProductAction.rejected, (state, action) => {
       state.loading = false;
       state.product = null;
-      state.isAdded = false;
       state.error = action.payload;
     });
 
@@ -239,6 +271,7 @@ const productSlices = createSlice({
     // Reset Success Action
     builder.addCase(resetSuccessAction.pending, (state) => {
       state.isAdded = false;
+      state.isUpdated = false;
     });
   },
 });

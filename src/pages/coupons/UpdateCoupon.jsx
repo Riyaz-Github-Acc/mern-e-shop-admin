@@ -42,12 +42,21 @@ export default function UpdateCoupon() {
     discount: coupon?.coupon?.discount,
   });
 
-  //handleOnChange---
+  // Update formData when product changes
+  useEffect(() => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      code: coupon?.coupon?.code,
+      discount: coupon?.coupon?.discount,
+    }));
+  }, [coupon?.coupon]);
+
+  // handleOnChange---
   const handleOnChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  //handleOnSubmit---
+  // handleOnSubmit---
   const handleOnSubmit = (e) => {
     e.preventDefault();
     dispatch(
@@ -60,7 +69,7 @@ export default function UpdateCoupon() {
       })
     );
 
-    //reset
+    // Reset
     setFormData({
       code: "",
       discount: "",

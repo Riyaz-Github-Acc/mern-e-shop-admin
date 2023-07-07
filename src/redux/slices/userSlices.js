@@ -147,8 +147,8 @@ export const getUserProfileAction = createAsyncThunk(
 
 // Fetch Users Action
 export const fetchUsersAction = createAsyncThunk(
-  "users/fetch-all",
-  async ({ rejectWithValue, getState }) => {
+  "users/fetch-All",
+  async (payload, { rejectWithValue, getState, dispatch }) => {
     try {
       // Token Authentication
       const token = getState()?.users?.userAuth?.userInfo?.token;
@@ -160,7 +160,6 @@ export const fetchUsersAction = createAsyncThunk(
 
       // Make http request
       const { data } = await axios.get(`${baseURL}/users`, config);
-      console.log(data);
       return data;
     } catch (error) {
       return rejectWithValue(error?.response?.data);

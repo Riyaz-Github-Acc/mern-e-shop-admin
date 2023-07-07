@@ -54,7 +54,7 @@ export const createCouponAction = createAsyncThunk(
 export const updateCouponAction = createAsyncThunk(
   "coupons/update",
   async (
-    { discount, startDate, endDate, id },
+    { code, discount, startDate, endDate, id },
     { rejectWithValue, getState, dispatch }
   ) => {
     try {

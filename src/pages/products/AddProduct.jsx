@@ -87,7 +87,7 @@ export default function AddProduct() {
     setColorsOption(colors);
   };
 
-  //Converted Colors
+  // Converted Colors
   const colorsConverted = colors?.map((color) => {
     return {
       value: color?.name,

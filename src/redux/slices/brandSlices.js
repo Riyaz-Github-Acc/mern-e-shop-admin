@@ -13,7 +13,7 @@ const initialState = {
   error: null,
   isAdded: false,
   isUpdated: false,
-  isDelete: false,
+  isDeleted: false,
 };
 
 // Create Brand Action
@@ -39,6 +39,70 @@ export const createBrandAction = createAsyncThunk(
         },
         config
       );
+      return data;
+    } catch (error) {
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+
+// Update Brand Action
+export const updateBrandAction = createAsyncThunk(
+  "brands/update",
+  async ({ name, id }, { rejectWithValue, getState, dispatch }) => {
+    try {
+      // Token Authenticated
+      const token = getState()?.users?.userAuth?.userInfo?.token;
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      // Make http Request
+      const { data } = await axios.put(
+        `${baseURL}/brands/${id}`,
+        {
+          name,
+        },
+        config
+      );
+      return data;
+    } catch (error) {
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+
+// Delete Brand Action
+export const deleteBrandAction = createAsyncThunk(
+  "brands/delete",
+  async (id, { rejectWithValue, getState, dispatch }) => {
+    try {
+      // Token Authenticated
+      const token = getState()?.users?.userAuth?.userInfo?.token;
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      // Make http Request
+      const { data } = await axios.delete(`${baseURL}/brands/${id}`, config);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+
+// Fetch Brand Action
+export const fetchBrandAction = createAsyncThunk(
+  "brands/fetch",
+  async (id, { rejectWithValue, getState, dispatch }) => {
+    try {
+      // Make http Request
+      const { data } = await axios.get(`${baseURL}/brands/${id}`);
       return data;
     } catch (error) {
       return rejectWithValue(error?.response?.data);
@@ -78,6 +142,48 @@ const brandSlices = createSlice({
       state.loading = false;
       state.brand = null;
       state.isAdded = false;
+      state.error = action.payload;
+    });
+
+    // Update
+    builder.addCase(updateBrandAction.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(updateBrandAction.fulfilled, (state, action) => {
+      state.loading = false;
+      state.brand = action.payload;
+      state.isUpdated = true;
+    });
+    builder.addCase(updateBrandAction.rejected, (state, action) => {
+      state.loading = false;
+      state.brand = null;
+      state.error = action.payload;
+    });
+
+    // Delete
+    builder.addCase(deleteBrandAction.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(deleteBrandAction.fulfilled, (state, action) => {
+      state.loading = false;
+      state.isDeleted = true;
+    });
+    builder.addCase(deleteBrandAction.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    });
+
+    // Fetch
+    builder.addCase(fetchBrandAction.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(fetchBrandAction.fulfilled, (state, action) => {
+      state.loading = false;
+      state.brand = action.payload;
+    });
+    builder.addCase(fetchBrandAction.rejected, (state, action) => {
+      state.loading = false;
+      state.brand = null;
       state.error = action.payload;
     });
 
