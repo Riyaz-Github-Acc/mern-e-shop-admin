@@ -98,7 +98,7 @@ export const deleteColorAction = createAsyncThunk(
 // Fetch color Action
 export const fetchColorAction = createAsyncThunk(
   "colors/fetch",
-  async (payload, { rejectWithValue, getState, dispatch }) => {
+  async (id, { rejectWithValue, getState, dispatch }) => {
     try {
       // Make http Request
       const { data } = await axios.get(`${baseURL}/colors/${id}`);
@@ -208,6 +208,7 @@ const colorSlices = createSlice({
     // Reset Success Action
     builder.addCase(resetSuccessAction.pending, (state) => {
       state.isAdded = false;
+      state.isUpdated = false;
     });
   },
 });

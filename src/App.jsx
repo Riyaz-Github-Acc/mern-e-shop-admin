@@ -27,6 +27,7 @@ import UpdateColor from "./pages/categories/UpdateColor";
 import AddCategory from "./pages/categories/AddCategory";
 import CategoriesList from "./pages/categories/CategoriesList";
 import UpdateCategory from "./pages/categories/UpdateCategory";
+import UpdateOrders from "./pages/orders/UpdateOrders";
 
 const App = () => {
   return (
@@ -45,6 +46,9 @@ const App = () => {
 
           {/* Orders */}
           <Route path="/orders" element={<Orders />} />
+          <Route path="/edit-order/:id" element={<UpdateOrders />} />
+
+          {/* Customers */}
           <Route path="/customers" element={<Customers />} />
 
           {/* Products */}

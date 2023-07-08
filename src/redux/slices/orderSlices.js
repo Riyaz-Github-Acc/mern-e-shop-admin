@@ -65,7 +65,7 @@ export const updateOrderAction = createAsyncThunk(
 
       // Make http Request
       const { data } = await axios.put(
-        `${baseURL}/orders/update/${id}`,
+        `${baseURL}/orders/${id}`,
         {
           status,
         },
@@ -121,9 +121,9 @@ export const fetchOrdersAction = createAsyncThunk(
   }
 );
 
-// Get Orders Stats
-export const ordersStatsAction = createAsyncThunk(
-  "orders/statistics",
+// Get Sales Stats
+export const salesStatsAction = createAsyncThunk(
+  "sales/statistics",
   async (payload, { rejectWithValue, getState, dispatch }) => {
     try {
       const token = getState()?.users?.userAuth?.userInfo?.token;
@@ -133,7 +133,7 @@ export const ordersStatsAction = createAsyncThunk(
         },
       };
 
-      const { data } = await axios.get(`${baseURL}/orders/sales/stats`, config);
+      const { data } = await axios.get(`${baseURL}/sales`, config);
       return data;
     } catch (error) {
       return rejectWithValue(error?.response?.data);
@@ -205,14 +205,14 @@ const orderSlices = createSlice({
     });
 
     // Stats
-    builder.addCase(ordersStatsAction.pending, (state) => {
+    builder.addCase(salesStatsAction.pending, (state) => {
       state.loading = true;
     });
-    builder.addCase(ordersStatsAction.fulfilled, (state, action) => {
+    builder.addCase(salesStatsAction.fulfilled, (state, action) => {
       state.loading = false;
       state.stats = action.payload;
     });
-    builder.addCase(ordersStatsAction.rejected, (state, action) => {
+    builder.addCase(salesStatsAction.rejected, (state, action) => {
       state.loading = false;
       state.stats = null;
       state.error = action.payload;

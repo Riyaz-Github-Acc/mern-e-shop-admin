@@ -5,17 +5,56 @@ import {
   ShoppingBasket,
   CurrencyRupee,
 } from "@mui/icons-material";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+import {
+  fetchOrdersAction,
+  salesStatsAction,
+} from "../redux/slices/orderSlices";
+import { fetchProductsAction } from "../redux/slices/productSlices";
+import baseURL from "../utils/baseURL";
 
 const Widget = ({ type }) => {
   let data;
+  const dispatch = useDispatch();
 
-  // Temporary
-  const amount = 1000;
+  // Get Sales From Store
+  useEffect(() => {
+    dispatch(salesStatsAction());
+  }, [dispatch]);
+
+  const { sales, todaySales } = useSelector((state) => state?.orders?.stats);
+
+  // Get Products From Store
+  useEffect(() => {
+    dispatch(fetchOrdersAction());
+  }, [dispatch]);
+
+  const {
+    orders: { orders },
+  } = useSelector((state) => state?.orders);
+
+  // Get Products From Store
+  let productUrl = `${baseURL}/products`;
+
+  useEffect(() => {
+    dispatch(
+      fetchProductsAction({
+        url: productUrl,
+      })
+    );
+  }, [productUrl, dispatch]);
+
+  const {
+    products: { products },
+  } = useSelector((state) => state?.products);
 
   if (type === "todaysSales") {
     data = {
       title: "Today's Sales",
       isMoney: true,
+      number: orders?.length,
       bgRadius: "rgba(239, 88, 28, 0.5)",
       icon: (
         <CreditCard
@@ -32,6 +71,7 @@ const Widget = ({ type }) => {
     data = {
       title: "Total Orders",
       isMoney: false,
+      number: orders?.length,
       bgRadius: "rgba(0, 133, 64, 0.5)",
       icon: (
         <Inventory
@@ -48,6 +88,7 @@ const Widget = ({ type }) => {
     data = {
       title: "Total Products",
       isMoney: false,
+      number: products?.length,
       bgRadius: "rgba(0, 119, 182, 0.5)",
       icon: (
         <ShoppingBasket
@@ -64,6 +105,7 @@ const Widget = ({ type }) => {
     data = {
       title: "Total Sales",
       isMoney: true,
+      number: sales?.map((sale) => sale.totalSales.toFixed(0)),
       bgRadius: "rgba(209, 43, 62, 0.5)",
       icon: (
         <CurrencyRupee
@@ -94,7 +136,7 @@ const Widget = ({ type }) => {
           {data.title}
         </div>
         <div className="text-lg">
-          {data.isMoney && "₹"} {amount}
+          {data.isMoney && "₹"} {data.number}
         </div>
       </div>
     </div>

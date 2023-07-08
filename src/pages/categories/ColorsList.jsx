@@ -122,7 +122,7 @@ export default function ColorsList() {
                           {/* edit */}
                           <td className="relative whitespace-nowrap py-4 px-4 text-right text-sm font-medium">
                             <Link
-                              to={`/admin/products/${color?._id}`}
+                              to={`/edit-color/${color?._id}`}
                               className="text-cyan-800 hover:text-cyan-900"
                             >
                               <svg
