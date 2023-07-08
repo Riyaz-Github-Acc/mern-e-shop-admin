@@ -32,12 +32,12 @@ const Orders = ({ orders }) => {
             >
               Order Date
             </th>
-            <th
+            {/* <th
               scope="col"
               className="px-4 py-3.5 text-left text-sm font-semibold"
             >
               Delivery Date
-            </th>
+            </th> */}
             <th
               scope="col"
               className="px-4 py-3.5 text-left text-sm font-semibold"
@@ -89,9 +89,9 @@ const Orders = ({ orders }) => {
                 {new Date(order?.createdAt).toLocaleDateString()}
               </td>
 
-              <td className="hidden px-4 py-4 text-sm text-light-gray lg:table-cell">
+              {/* <td className="hidden px-4 py-4 text-sm text-light-gray lg:table-cell">
                 Unknown
-              </td>
+              </td> */}
 
               <td className="hidden px-4 py-4 text-sm text-light-gray sm:table-cell capitalize">
                 {order.status === "pending" && (

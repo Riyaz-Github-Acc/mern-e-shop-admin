@@ -24,7 +24,7 @@ const Widget = ({ type }) => {
     dispatch(salesStatsAction());
   }, [dispatch]);
 
-  const { sales, todaySales } = useSelector((state) => state?.orders?.stats);
+  const { stats } = useSelector((state) => state?.orders);
 
   // Get Products From Store
   useEffect(() => {
@@ -54,7 +54,7 @@ const Widget = ({ type }) => {
     data = {
       title: "Today's Sales",
       isMoney: true,
-      number: orders?.length,
+      number: 0,
       bgRadius: "rgba(239, 88, 28, 0.5)",
       icon: (
         <CreditCard
@@ -105,7 +105,7 @@ const Widget = ({ type }) => {
     data = {
       title: "Total Sales",
       isMoney: true,
-      number: sales?.map((sale) => sale.totalSales.toFixed(0)),
+      number: stats?.sales?.map((sale) => sale.totalSales.toFixed(0)),
       bgRadius: "rgba(209, 43, 62, 0.5)",
       icon: (
         <CurrencyRupee
