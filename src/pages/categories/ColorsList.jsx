@@ -41,7 +41,7 @@ export default function ColorsList() {
 
   return (
     <>
-      {isDeleted && <SuccessMsg message="Color deleted successfully" />}
+      {/* {isDeleted && <SuccessMsg message="Color deleted successfully" />} */}
 
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="sm:flex sm:items-center">

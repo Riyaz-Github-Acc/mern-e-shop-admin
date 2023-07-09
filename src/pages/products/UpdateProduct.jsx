@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import Select from "react-select";
@@ -22,6 +22,7 @@ import SpinLoading from "../../components/loaders/SpinLoading";
 const animatedComponents = makeAnimated();
 
 export default function UpdateProduct() {
+  const navigate = useNavigate();
   //dispatch
   const dispatch = useDispatch();
   //get id from params
@@ -143,6 +144,8 @@ export default function UpdateProduct() {
   });
 
   // Update formData when product changes
+  const [updated, setUpdated] = useState(false);
+
   useEffect(() => {
     setFormData((prevFormData) => ({
       ...prevFormData,
@@ -173,7 +176,7 @@ export default function UpdateProduct() {
       })
     );
 
-    //reset form data
+    // Reset Form Data
     setFormData({
       name: "",
       description: "",
@@ -185,7 +188,16 @@ export default function UpdateProduct() {
       price: "",
       totalQty: "",
     });
+
+    setUpdated(true);
   };
+
+  useEffect(() => {
+    if (isUpdated && updated) {
+      // Redirect
+      navigate("/manage-stocks");
+    }
+  }, [isUpdated, updated, navigate]);
 
   return (
     <>

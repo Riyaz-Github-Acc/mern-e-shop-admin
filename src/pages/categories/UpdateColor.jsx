@@ -1,12 +1,12 @@
 /* eslint-disable react/no-unknown-property */
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import Button from "../../components/Button";
 import ErrorMsg from "../../components/messages/ErrorMsg";
 import SuccessMsg from "../../components/messages/SuccessMsg";
-import CircularLoading from "../../components/loaders/CircularLoading";
+
 import {
   fetchColorAction,
   updateColorAction,
@@ -14,6 +14,8 @@ import {
 import SpinLoading from "../../components/loaders/SpinLoading";
 
 export default function UpdateColor() {
+  const navigate = useNavigate();
+
   //get coupon from url
   const { id } = useParams();
 
@@ -48,6 +50,8 @@ export default function UpdateColor() {
   };
 
   //onSubmit
+  const [updated, setUpdated] = useState(false);
+
   const handleOnSubmit = (e) => {
     e.preventDefault();
 
@@ -60,7 +64,16 @@ export default function UpdateColor() {
     setFormData({
       name: "",
     });
+
+    setUpdated(true);
   };
+
+  useEffect(() => {
+    if (isUpdated && updated) {
+      // Redirect
+      navigate("/colors-list");
+    }
+  }, [isUpdated, updated, navigate]);
 
   return (
     <>

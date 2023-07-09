@@ -220,6 +220,8 @@ const couponSlices = createSlice({
     // Reset Success Action
     builder.addCase(resetSuccessAction.pending, (state) => {
       state.isAdded = false;
+      state.isUpdated = false;
+      state.isDeleted = false;
     });
   },
 });

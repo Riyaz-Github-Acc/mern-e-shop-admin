@@ -218,7 +218,6 @@ const productSlices = createSlice({
     builder.addCase(updateProductAction.rejected, (state, action) => {
       state.loading = false;
       state.product = null;
-      state.isUpdated = false;
       state.error = action.payload;
     });
 
@@ -272,6 +271,7 @@ const productSlices = createSlice({
     builder.addCase(resetSuccessAction.pending, (state) => {
       state.isAdded = false;
       state.isUpdated = false;
+      state.isDeleted = false;
     });
   },
 });

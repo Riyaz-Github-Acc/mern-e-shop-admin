@@ -169,6 +169,7 @@ const orderSlices = createSlice({
     builder.addCase(updateOrderAction.fulfilled, (state, action) => {
       state.loading = false;
       state.order = action.payload;
+      state.isUpdated = true;
     });
     builder.addCase(updateOrderAction.rejected, (state, action) => {
       state.loading = false;
@@ -226,6 +227,8 @@ const orderSlices = createSlice({
     // Reset Success Action
     builder.addCase(resetSuccessAction.pending, (state) => {
       state.isAdded = false;
+      state.isUpdated = false;
+      state.isDeleted = false;
     });
   },
 });

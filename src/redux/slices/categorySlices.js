@@ -216,6 +216,7 @@ const categorySlices = createSlice({
     builder.addCase(resetSuccessAction.pending, (state) => {
       state.isAdded = false;
       state.isUpdated = false;
+      state.isDeleted = false;
     });
   },
 });
