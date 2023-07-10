@@ -12,7 +12,6 @@ import Button from "../../components/Button";
 import ErrorMsg from "../../components/messages/ErrorMsg";
 import SpinLoading from "../../components/loaders/SpinLoading";
 import NoDataFound from "../../components/messages/NoDataFound";
-import SuccessMsg from "../../components/messages/SuccessMsg";
 
 export default function ColorsList() {
   //dispatch

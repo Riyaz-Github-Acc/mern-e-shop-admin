@@ -8,10 +8,10 @@ const Home = () => {
   return (
     <>
       <section className="w-[100%] flex flex-wrap items-center justify-between gap-3">
-        <Widget type="todaysSales" />
+        <Widget type="totalSales" />
         <Widget type="totalOrders" />
         <Widget type="totalProducts" />
-        <Widget type="totalSales" />
+        <Widget type="avgSale" />
       </section>
 
       <section className="mt-10">

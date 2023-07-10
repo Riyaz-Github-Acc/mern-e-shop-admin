@@ -50,11 +50,11 @@ const Widget = ({ type }) => {
     products: { products },
   } = useSelector((state) => state?.products);
 
-  if (type === "todaysSales") {
+  if (type === "avgSale") {
     data = {
-      title: "Today's Sales",
+      title: "Average Sale",
       isMoney: true,
-      number: 0,
+      number: stats?.sales?.map((sale) => sale.avgSale.toFixed(0)),
       bgRadius: "rgba(239, 88, 28, 0.5)",
       icon: (
         <CreditCard
